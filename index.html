@@ -13,7 +13,7 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> circle {fill: lightblue; stroke: black;} </style>
 <body onload='init()'>
-<svg width=300 height=300>
+<svg width=600 height=600>
 </svg>
 <script>
     let file_data = []
@@ -23,18 +23,18 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
         .then(function(data) {
             margin = 50
             console.log(data)
-            /*max_cityavg = 0
-            max_highwayavg = 0
+            max_gdp = 0
+            max_lifeexp = 0
             for(i=0; i<data.length; i++){
-                cityavg = Number(data[i]["AverageCityMPG"]);
-                highwayavg = Number(data[i]["AverageHighwayMPG"]);
-                if(cityavg > max_cityavg) max_cityavg = cityavg;
+                gdp = Number(data[i]["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]);
+                lifeexp = Number(data[i]["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]);
+                if(gdp > max_gdp) max_gdp = gdp;
 
-                if(highwayavg>max_highwayavg) max_highwayavg = highwayavg;
+                if(lifeexp>max_lifeexp) max_lifeexp = lifeexp;
             }
 
-            let xs = d3.scaleLog().domain([10,150]).range([0,200])
-            let ys = d3.scaleLog().domain([10,150]).range([200,0])
+            let xs = d3.scaleLinear().domain([0,max_lifeexp]).range([0,500])
+            let ys = d3.scaleLog().domain([0,max_gdp]).range([500,0])
 
 
             d3.select('svg')
@@ -44,21 +44,21 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
                 .data(data)
                 .enter()
                 .append('circle')
-                .attr("cx", function(d, i){return xs(Number(d["AverageCityMPG"]))})
-                .attr("cy", function(d, i){return ys(Number(d["AverageHighwayMPG"]))})
-                .attr("r", function(d, i){return(2+Number(d["EngineCylinders"]))})
+                .attr("cx", function(d, i){return xs(Number(d["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]))})
+                .attr("cy", function(d, i){return ys(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))})
+                .attr("r", function(d, i){return(2))})
 
 
             d3.select("svg").append("g")
                 .attr("transform", "translate(" + margin + "," + margin + ")")
-                .call(d3.axisLeft(ys).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")))
+                .call(d3.axisLeft(ys).tickFormat(d3.format("~s")))//tickValues([10, 20, 50, 100])
 
 
             d3.select("svg").append("g")
                 .attr("transform", "translate(" + margin + "," + (margin+200) + ")")
-                .call(d3.axisBottom(xs).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")))
+                .call(d3.axisBottom(xs).tickFormat(d3.format("~s")))//.tickValues([10, 20, 50, 100])
 
-             */
+
         })
         .catch(function(error){
             // handle error
