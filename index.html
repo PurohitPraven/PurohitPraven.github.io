@@ -44,7 +44,7 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
                 .append('circle')
                 .attr("cx", function(d, i){return xs(Number(d["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]))})
                 .attr("cy", function(d, i){return ys(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))})
-                .attr("r", function(d, i){return(2);})
+                .attr("r", 2);
 
 
             d3.select("svg").append("g")
