@@ -16,8 +16,6 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
 <svg width=600 height=600>
 </svg>
 <script>
-    let file_data = []
-
     async function init() {
     d3.csv("https://purohitpraven.github.io/Worldbank_GDP related data.csv")
         .then(function(data) {
@@ -46,7 +44,7 @@ Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").--
                 .append('circle')
                 .attr("cx", function(d, i){return xs(Number(d["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]))})
                 .attr("cy", function(d, i){return ys(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))})
-                .attr("r", function(d, i){return(2))})
+                .attr("r", function(d, i){return(2);})
 
 
             d3.select("svg").append("g")
