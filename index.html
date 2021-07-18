@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--The CSV file at https://flunky.github.io/cars2017.csv contains average data for 2017
+automobile manufacturers. Create a scatter plot of this data over a 200x200 as follows.
+
+Plot the Average City MPG horizontally on a logarithmic scale.
+Plot the Average Hightway MPG vertically on a logarithmic scale.
+Set the radius of each circle to 2 plus the number of cylinders for that entry.
+Set the logarithmic scales to base 10, over a domain from 10 to 150.
+Use the .tickValues() method of each axis to set four tick values at 10, 20, 50 and 100.
+Use the .tickFormat() method of each axis to set the ticks to d3.format("~s").-->
+
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> circle {fill: lightblue; stroke: black;} </style>
+<body onload='init()'>
+<svg width=300 height=300>
+</svg>
+<script>
+    let file_data = []
+
+    async function init() {
+    d3.csv("https://flunky.github.io/cars2017.csv")
+        .then(function(data) {
+            margin = 50
+            max_cityavg = 0
+            max_highwayavg = 0
+            for(i=0; i<data.length; i++){
+                cityavg = Number(data[i]["AverageCityMPG"]);
+                highwayavg = Number(data[i]["AverageHighwayMPG"]);
+                if(cityavg > max_cityavg) max_cityavg = cityavg;
+
+                if(highwayavg>max_highwayavg) max_highwayavg = highwayavg;
+            }
+
+            let xs = d3.scaleLog().domain([10,150]).range([0,200])
+            let ys = d3.scaleLog().domain([10,150]).range([200,0])
+
+
+            d3.select('svg')
+                .append('g')
+                .attr('transform','translate('+margin+','+margin+')')
+                .selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr("cx", function(d, i){return xs(Number(d["AverageCityMPG"]))})
+                .attr("cy", function(d, i){return ys(Number(d["AverageHighwayMPG"]))})
+                .attr("r", function(d, i){return(2+Number(d["EngineCylinders"]))})
+
+
+            d3.select("svg").append("g")
+                .attr("transform", "translate(" + margin + "," + margin + ")")
+                .call(d3.axisLeft(ys).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")))
+
+
+            d3.select("svg").append("g")
+                .attr("transform", "translate(" + margin + "," + (margin+200) + ")")
+                .call(d3.axisBottom(xs).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")))
+        })
+        .catch(function(error){
+            // handle error
+            console.log("in catch error of d3.csv")
+            console.log(error)
+        })
+    }
+
+
+
+</script>
+</body>
+</html>
