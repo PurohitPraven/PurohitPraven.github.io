@@ -254,6 +254,22 @@
             d3.select("svg").append("g")
                 .attr("transform", "translate(" + margin + "," + (margin+svg_dim) + ")")
                 .call(d3.axisBottom(xs).tickFormat(d3.format("~s")))
+
+            d3.select("svg").append("text")
+                .attr("class", "x label")
+                .attr("text-anchor", "end")
+                .attr("x", 500)
+                .attr("y", 1.75*margin+svg_dim)
+                .text("Life expectancy at birth, total (years)");
+
+            d3.select("svg").append("text")
+                .attr("class", "y label")
+                .attr("text-anchor", "end")
+                .attr("x", -svg_dim/3)
+                .attr("y", 10)
+                .attr("dy", ".25em")
+                .attr("transform", "rotate(-90)")
+                .text("GDP per capita, PPP (constant 2017 international $)");
         })
         .catch(function(error){
             // handle error
