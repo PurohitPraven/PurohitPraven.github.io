@@ -171,6 +171,8 @@
             clear_all = []
             d3.selectAll("g").data(clear_all).exit().remove()
 
+            //find minimum and maximum for GDP and Life Expectancy to use for axis limits
+
             for(i=0; i<data.length; i++){
                 gdp = Number(data[i]["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]);
                 lifeexp = Number(data[i]["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]);
@@ -229,17 +231,22 @@
                         .attr('stroke', 'black')
                         .attr('fill', function(d,i)
                         {
+                            if(d=="<-Prev" || d=="Next->") return("yellow")
                             if(Number(d)===2005) return('blue');
                             else return ('red');
                         })
                         .on('click', function(d,i)
                         {
-                            d3.selectAll("rect").attr("fill", "red");
+                            d3.selectAll("rect").attr("fill", function(d)
+                            {
+                                if(d=="Next->" || d=="<-Prev") return ("yellow");
+                                else return ("red")
+                            })
 
                             d3.select(this)
                                 .attr("fill", function(d)
                                 {
-                                    if(d=="Next->" || d=="<-Prev") return ("red");
+                                    if(d=="Next->" || d=="<-Prev") return ("yellow");
                                     else return ("blue")
                                 })
 
