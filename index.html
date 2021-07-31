@@ -64,22 +64,15 @@
                         label: "Sub-Saharan African countries have lower life expectancy and lower GDP. Even when GDP is high, life expectancy doesnt show a corresponding increase",
                         title: "Sub-Saharan Africa",
                         wrap: 190
-                    },
-                    /*connector: {
-                        end: "dot",
-                        type: "curve",
-                        //can also add a curve type, e.g. curve: d3.curveStep
-                        points: [[100, 14],[190, 52]]
-                    },*/
-                    //settings for the subject, in this case the circle radius
-                    subject: {
+                    },subject: {
                         x1: 70,
                         x2: 450
                     },
                     x: 190,
                     y: 260,
                     dy: -70,
-                    dx: 20
+                    dx: 20,
+                    className : "Africa"
                 },
                 {
                     type: d3.annotationXYThreshold,
@@ -302,7 +295,6 @@
                     let s = "<label style='color:" + cs(d)
                         + "'><input type='checkbox' checked=true id='" + d
                         + "' onclick=ARegionClicked(this)>" + d + "</label>"
-                    console.log(s)
                     return(s);
                 })
                 .style("fill", function(d){ return cs(d)})
@@ -318,21 +310,23 @@
                     let gdp =ys(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))
                     return "translate(" + life_exp + "," + gdp + ")"; })
                 .on("mouseover", function(d) {
-                    div.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    div.html(function(){return(d["Country Name"]
-                        + "<br/> GDP = $"+ Math.round(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"])))
-                    })
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
+                    if(selected_regions.includes(d["Region"])){
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div.html(function(){return(d["Country Name"]
+                            + "<br/> GDP = $"+ Math.round(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"])))
+                        })
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    }
                 })
                 .on("mouseout", function(d) {
                     div.transition()
                         .duration(500)
                         .style("opacity", 0);
                 })
-                .append("circle").attr("r", 3).attr("opacity", 1)
+                .append("circle").attr("r", 2).attr("opacity", 1)
                 .attr("fill", function(d, i){return(cs(d["Region"]))})
 
             //Decide which country codes to show and which to hide to avoid overlapping
@@ -367,20 +361,6 @@
                         .attr("x", 3)
                         .attr("y", 3)
                 })
-
-
-            /*d3.select("body").selectAll("label").data(regions).enter().append("label").selectAll("input")
-                .data(regions)
-                .enter()
-                .append("input").attr("type", "checkbox")
-                .attr("x", 40)
-                .attr("y", function(d,i){ return 20 + i*20}) // 10 is where the first dot appears. 20 is the distance between dots
-                //.style("fill", function(d){ return cs(d)})
-                .text(function(d){ return d})
-                .attr("id", function(d){ return d})
-                .attr('checked','true')
-                //.attr("text-anchor", "left")
-                //.style("alignment-baseline", "middle")*/
 
             d3.select("svg").append("g")
                 .attr("transform", "translate(" + margin + "," + margin + ")")
@@ -423,8 +403,14 @@
         let checked = object.checked
         let clicked_region = object.id
 
-        if (!checked) selected_regions.splice(selected_regions.indexOf(clicked_region),1);
-        else selected_regions.push(clicked_region);
+        if (!checked){
+            selected_regions.splice(selected_regions.indexOf(clicked_region),1);
+            if(clicked_region=="Sub-Saharan Africa") d3.select(".Africa").attr("opacity", 0);
+        }
+        else{
+            selected_regions.push(clicked_region);
+            if(clicked_region=="Sub-Saharan Africa") d3.select(".Africa").attr("opacity", 1);
+        }
 
         plot_points();
     }
