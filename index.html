@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+
+<link href='https://fonts.googleapis.com/css?family=Lato:300,900' rel='stylesheet' type='text/css'>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style>
     /*circle {fill: lightblue; stroke: darkred;}*/
@@ -16,10 +18,25 @@
         pointer-events: none;
     }
 
+    svg {
+        background-color: white;
+        font-family: 'Lato';
+    }
+
+    .annotation-group, text.title {
+        font-size: .7em;
+    }
+
+    text.title {
+        font-size: .8em;
+    }
 </style>
 <body onload='init()'>
-<div "font-size":24> GDP vs Life expectancy for counties, and how it has changed over years</div>
-<svg width=900 height=800>
+
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
+<h1> GDP vs Life expectancy for counties, and how it has changed over years</h1><br/>
+<svg width=1300 height=900>
 
 </svg>
 <script>
@@ -33,12 +50,123 @@
     async function init() {
     d3.csv("https://purohitpraven.github.io/Worldbank_GDP related data.csv")
         .then(function(data) {
-            let margin = 50
-            let svg_dim = 800-100
+            let margin = 60
+            let svg_dim = 1200-500
             let max_gdp = 0
             let max_lifeexp = 0
 
             csv_data = data
+
+            const annotations = [
+                 {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "Sub-Saharan African countries have lower life expectancy and lower GDP. Even when GDP is high, life expectancy doesnt show a corresponding increase",
+                        title: "Sub-Saharan Africa",
+                        wrap: 190
+                    },
+                    /*connector: {
+                        end: "dot",
+                        type: "curve",
+                        //can also add a curve type, e.g. curve: d3.curveStep
+                        points: [[100, 14],[190, 52]]
+                    },*/
+                    //settings for the subject, in this case the circle radius
+                    subject: {
+                        x1: 70,
+                        x2: 450
+                    },
+                    x: 190,
+                    y: 260,
+                    dy: -70,
+                    dx: 20
+                },
+                {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "North American countries are at the top of the spectrum for GDP and Life expectancy",
+                        title: "North America",
+                        wrap: 190
+                    },
+                    subject: {
+                        y1: 130,
+                        y2: 240
+                    },
+                    x: 790,
+                    y: 180,
+                    dy: 30,
+                    dx: 40
+                },
+                {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "Rest of the regions are speread across from 60 years to 85 years for Life expectancy, and are not at the bottom of the spectrum for GDP",
+                        title: "Rest of the Regions",
+                        wrap: 340
+                    },
+                    subject: {
+                        x1: 400,
+                        x2: 740
+                    },
+                    x: 650,
+                    y: 80,
+                    dy: 30,
+                    dx: 190
+                },
+                {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "We notice 2 trends. (1) Generally as years progress, the GDP of countries increases and life expectancy increases. " +
+                               "     (2) Countries that have higher GDP seem to have higher life expectancy",
+                        title: "Trend",
+                        wrap: 340
+                    },
+                    subject: {
+                        y1: 100,
+                        y2: 740
+                    },
+                    x: 750,
+                    y: 400,
+                    dy: 30,
+                    dx: 90
+                },
+                {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "Click Next or previous to see changes in GDP and Life Expectancy over years, or select an year by clicking on it",
+                        title: "Slide Show",
+                        wrap: 340
+                    },
+                    subject: {
+                        y1: 0,
+                        y2: 30
+                    },
+                    x: 770,
+                    y: 10,
+                    dy: 30,
+                    dx: 40
+                },
+                {
+                    type: d3.annotationXYThreshold,
+                    note: {
+                        label: "Select different regions to see region specific spreads",
+                        title: "Legend",
+                        wrap: 140
+                    },
+                    subject: {
+                        y1: 600,
+                        y2: 740
+                    },
+                    x: 1020,
+                    y: 660,
+                    dy: 10,
+                    dx: 10
+                }].map(function(d){ d.color = "#E8336D"; return d})
+
+            const makeAnnotations = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations(annotations)
+
 
             clear_all = []
             d3.selectAll("g").data(clear_all).exit().remove()
@@ -150,16 +278,16 @@
                 .data(regions)
                 .enter()
                 .append("circle")
-                .attr("cx", 20)
-                .attr("cy", function(d,i){ return 20 + i*20}) // 10 is where the first dot appears. 20 is the distance between dots
+                .attr("cx", 720)
+                .attr("cy", function(d,i){ return 550 + i*20}) // 10 is where the first dot appears. 20 is the distance between dots
                 .attr("r", 5)
                 .style("fill", function(d){ return cs(d)})
 
             chart.selectAll("foreignObject")
                 .data(regions).enter()
                 .append("foreignObject")
-                .attr('x', 40)
-                .attr('y',  function(d,i){ return 10 + i*20})
+                .attr('x', 740)
+                .attr('y',  function(d,i){ return 550-10 + i*20})
                 .attr('width', 290)
                 .attr('height', 20)
                 .append("xhtml:tree")
@@ -266,10 +394,16 @@
                 .attr("class", "y label")
                 .attr("text-anchor", "end")
                 .attr("x", -svg_dim/3)
-                .attr("y", 10)
+                .attr("y", 20)
                 .attr("dy", ".25em")
                 .attr("transform", "rotate(-90)")
                 .text("GDP per capita, PPP (constant 2017 international $)");
+
+            d3.select("svg")
+                .append("g")
+                .attr("class", "annotation-group")
+                .call(makeAnnotations)
+
         })
         .catch(function(error){
             // handle error
