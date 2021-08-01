@@ -44,7 +44,7 @@
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
 <h1> GDP vs Life expectancy for countries, and how it has changed over years</h1><br/>
-<svg width=1300 height=900>
+<svg width=1800 height=900>
 
 </svg>
 <script>
@@ -59,7 +59,8 @@
     d3.csv("https://purohitpraven.github.io/Worldbank_GDP related data.csv")
         .then(function(data) {
             let margin = 60
-            let svg_dim = 1200-500
+            let svg_dim = 700
+            let svg_dim2 = 1400
             let max_gdp = 0
             let max_lifeexp = 0
 
@@ -153,7 +154,7 @@
                         title: "Legend",
                         wrap: 140
                     },
-                    x: 1020,
+                    x: 1620,
                     y: 660,
                     dy: 10,
                     dx: 10
@@ -304,8 +305,8 @@
             regions = d3.map(data, function(d){return d.Region;}).keys()
             selected_regions = [...regions]
 
-            xs = d3.scaleLinear().domain([min_lifeexp,max_lifeexp]).range([0,svg_dim]);
-            ys = d3.scaleLog().domain([min_gdp,max_gdp]).range([svg_dim,0]);
+            xs = d3.scaleLog().domain([min_gdp,max_gdp]).range([0,svg_dim2]);
+            ys = d3.scaleLinear().domain([min_lifeexp,max_lifeexp]).range([svg_dim,0]);
             cs = d3.scaleOrdinal().domain(regions).range(["blue", "green", "black", "red", "darkorange", "darkred", "grey"])
             //cs = d3.scaleOrdinal().domain(regions).range(d3.schemeTableau10)//d3.schemeCategory10)
 
@@ -395,7 +396,7 @@
                 .data(regions)
                 .enter()
                 .append("circle")
-                .attr("cx", 720)
+                .attr("cx", 1420)
                 .attr("cy", function(d,i){ return 550 + i*20}) // 10 is where the first dot appears. 20 is the distance between dots
                 .attr("r", 5)
                 .style("fill", function(d){ return cs(d)})
@@ -403,7 +404,7 @@
             chart.selectAll("foreignObject")
                 .data(regions).enter()
                 .append("foreignObject")
-                .attr('x', 740)
+                .attr('x', 1440)
                 .attr('y',  function(d,i){ return 550-10 + i*20})
                 .attr('width', 290)
                 .attr('height', 20)
@@ -423,9 +424,9 @@
                 .append("g")
                 .attr("id", function(d){return(d["Country Code"])})
                 .attr("transform", function(d, i) {
-                    let life_exp = xs(Number(d["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]))
-                    let gdp =ys(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))
-                    return "translate(" + life_exp + "," + gdp + ")"; })
+                    let life_exp = ys(Number(d["Life expectancy at birth, total (years) [SP.DYN.LE00.IN]"]))
+                    let gdp = xs(Number(d["GDP per capita, PPP (constant 2017 international $) [NY.GDP.PCAP.PP.KD]"]))
+                    return "translate(" + gdp + "," + life_exp + ")"; })
                 .on("mouseover", function(d) {
                     if(selected_regions.includes(d["Region"])){
                         div.transition()
@@ -484,7 +485,7 @@
                 .call(d3.axisLeft(ys).tickFormat(d3.format("~s")))
 
             d3.select("svg").append("g")
-                .attr("transform", "translate(" + margin + "," + (margin+svg_dim) + ")")
+                .attr("transform", "translate(" + margin + "," + (svg_dim+margin) + ")")
                 .call(d3.axisBottom(xs).tickFormat(d3.format("~s")))
 
             d3.select("svg").append("text")
@@ -494,7 +495,7 @@
                 .attr("y", 1.75*margin+svg_dim)
                 .style('fill', 'DarkGreen')
                 .style('font-weight', 'bold')
-                .text("Life expectancy at birth, total (years)")
+                .text("GDP per capita, PPP (constant 2017 international $)")
 
             d3.select("svg").append("text")
                 .attr("class", "y label")
@@ -505,7 +506,7 @@
                 .style('fill', 'DarkGreen')
                 .style('font-weight', 'bold')
                 .attr("transform", "rotate(-90)")
-                .text("GDP per capita, PPP (constant 2017 international $)");
+                .text("Life expectancy at birth, total (years)");
 
             d3.select("svg")
                 .append("g")
@@ -601,7 +602,7 @@
                 d3.select("#" + country ).attr("opacity",0);
 
             d3.select("#" + country ).transition(t)
-                .attr("transform", "translate(" + xs(life_exp) + "," + ys(gdp) + ")")
+                .attr("transform", "translate(" + xs(gdp) + "," + ys(life_exp) + ")")
 
             d3.select("#" + country ).datum(select_year_data[i])
         }
