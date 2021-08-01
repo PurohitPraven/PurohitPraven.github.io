@@ -19,12 +19,20 @@
     }
 
     svg {
-        background-color: white;
+        background-color: GhostWhite;
         font-family: 'Lato';
     }
 
     .annotation-group, text.title {
         font-size: .8em;
+    }
+
+    .annotation-group2, text.title {
+        font-size: .7em;
+    }
+
+    .annotation-group3, text.title {
+        font-size: 1em;
     }
 
     text.title {
@@ -90,29 +98,12 @@
                     dy: 30,
                     dx: 40,
                     className: "NorthAmerica"
-                },/*
+                },
                 {
-                    type: d3.annotationXYThreshold,
+                    type: d3.annotationCallout,
                     note: {
-                        label: "Rest of the regions are speread across from 60 years to 85 years for Life expectancy, and are not at the bottom of the spectrum for GDP",
-                        title: "Rest of the Regions",
-                        wrap: 340
-                    },
-                    subject: {
-                        x1: 400,
-                        x2: 740
-                    },
-                    x: 650,
-                    y: 80,
-                    dy: 30,
-                    dx: 190
-                },*/
-                {
-                    type: d3.annotationXYThreshold,
-                    note: {
-                        label: "We notice 2 trends. (1) Generally as years progress, the GDP of countries increases and life expectancy increases. " +
-                               "     (2) Countries that have higher GDP seem to have higher life expectancy",
-                        title: "Trend",
+                        label: "Countries that have higher GDP seem to have higher life expectancy",
+                        title: "1st Trend",
                         wrap: 340
                     },
                     subject: {
@@ -125,15 +116,30 @@
                     dx: 90
                 },
                 {
-                    type: d3.annotationXYThreshold,
+                    type: d3.annotationCallout,
+                    note: {
+                        label: "Generally as years progress, the GDP of countries increases and life expectancy increases",
+                        title: "2nd Trend",
+                        wrap: 340
+                    },
+                    x: 790,
+                    y: 380,
+                    dy: 30,
+                    dx: 90
+                }].map(function(d){ d.color = "Blue"; return d})
+
+
+            const makeAnnotations = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations(annotations)
+
+            const annotations2 = [
+                {
+                    type: d3.annotationCallout,
                     note: {
                         label: "Click Next or previous to see changes in GDP and Life Expectancy over years, or select an year by clicking on it",
                         title: "Slide Show",
                         wrap: 340
-                    },
-                    subject: {
-                        y1: 0,
-                        y2: 30
                     },
                     x: 770,
                     y: 10,
@@ -141,32 +147,35 @@
                     dx: 40
                 },
                 {
-                    type: d3.annotationXYThreshold,
+                    type: d3.annotationCallout,
                     note: {
                         label: "Select different regions to see region specific spreads",
                         title: "Legend",
                         wrap: 140
                     },
-                    subject: {
-                        y1: 600,
-                        y2: 740
-                    },
                     x: 1020,
                     y: 660,
                     dy: 10,
                     dx: 10
-                },
+                }].map(function(d){ d.color = "gray"; return d})
+
+
+            const makeAnnotations2 = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations(annotations2)
+
+            const annotations3 = [
                 {
                     type: d3.annotationCallout,
                     note: {
                         label: "UAE GDP falls, more impacted by the start of the housing bubble burst",
                         title: "2007",
-                        wrap: 140
+                        wrap: 160
                     },
                     x: 610,
                     y: 160,
-                    dy: 200,
-                    dx: -400,
+                    dy: 180,
+                    dx: -380,
                     className: "annotation2007"
                 },
                 {
@@ -174,7 +183,7 @@
                     note: {
                         label: "Zimbabwe GDP falls due to political instability and hyperinflation.",
                         title: "2008",
-                        wrap: 140
+                        wrap: 160
                     },
                     x: 160,
                     y: 630,
@@ -187,7 +196,7 @@
                     note: {
                         label: "Many countries see a fall in GDP due to recession, housing market crash and stock market crash",
                         title: "2009",
-                        wrap: 140
+                        wrap: 160
                     },
                     x: 120,
                     y: 260,
@@ -200,9 +209,9 @@
                     note: {
                         label: "Libya GDP falls significantly due to Libyan war and death of Mohammed Gaddafi",
                         title: "2011",
-                        wrap: 140
+                        wrap: 160
                     },
-                    x: 535,
+                    x: 550,
                     y: 440,
                     dy: -90,
                     dx: -310,
@@ -213,7 +222,7 @@
                     note: {
                         label: "GDP for Central African Republic falls due to civil war",
                         title: "2013",
-                        wrap: 140
+                        wrap: 160
                     },
                     x: 200,
                     y: 730,
@@ -224,24 +233,47 @@
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "Ireland GDP jumps due to inclusion of foreign companies in state balance sheet. " +
-                            "China experiences slowest growth in 25 years and GDP falls. " +
-                            "Sierra Leone GDP falls due to Ebola virus pandemic",
+                        label: "China experiences slowest growth in 25 years and GDP falls.",
                         title: "2015",
-                        wrap: 140
+                        wrap: 160
                     },
-                    x: 120,
-                    y: 260,
-                    dy: 0,
-                    dx: 0,
-                    className: "annotation2015",
-                    color: "red"
-                }].map(function(d){ d.color = "gray"; return d})
+                    x: 720,
+                    y: 100,
+                    dy: 100,
+                    dx: -500,
+                    className: "annotation2015"
+                },
+                {
+                    type: d3.annotationCallout,
+                    note: {
+                        label: "Ireland GDP jumps due to inclusion of foreign companies in state balance sheet. ",
+                        title: "",
+                        wrap: 160
+                    },
+                    x: 700,
+                    y: 168,
+                    dy: 170,
+                    dx: -400,
+                    className: "annotation2015_02"
+                },
+                {
+                    type: d3.annotationCallout,
+                    note: {
+                        label: "Sierra Leone GDP falls due to Ebola virus pandemic",
+                        title: "",
+                        wrap: 160
+                    },
+                    x: 260,
+                    y: 650,
+                    dy: -100,
+                    dx: -40,
+                    className: "annotation2015_03"
+                }].map(function(d){ d.color = "red"; return d})
 
-            const makeAnnotations = d3.annotation()
+
+            const makeAnnotations3 = d3.annotation()
                 .type(d3.annotationLabel)
-                .annotations(annotations)
-
+                .annotations(annotations3)
 
             clear_all = []
             d3.selectAll("g").data(clear_all).exit().remove()
@@ -274,8 +306,8 @@
 
             xs = d3.scaleLinear().domain([min_lifeexp,max_lifeexp]).range([0,svg_dim]);
             ys = d3.scaleLog().domain([min_gdp,max_gdp]).range([svg_dim,0]);
-            //cs = d3.scaleOrdinal().domain(regions).range(["blue", "green", "black", "red", "darkorange", "darkred", "grey"])
-            cs = d3.scaleOrdinal().domain(regions).range(d3.schemeTableau10)//d3.schemeCategory10)
+            cs = d3.scaleOrdinal().domain(regions).range(["blue", "green", "black", "red", "darkorange", "darkred", "grey"])
+            //cs = d3.scaleOrdinal().domain(regions).range(d3.schemeTableau10)//d3.schemeCategory10)
 
 
             d3.select("svg")
@@ -284,7 +316,9 @@
                 .enter()
                 .append("g")
                 .attr("transform", function(d, i) { return "translate(" + (i*58) + ",20)"; })
-                .append("text").text(function(d,i){return(years[i])})
+                .append("text")
+                .text(function(d,i){return(years[i])})
+                .style('font-weight', 600)
 
             // Define the div for the tooltip
             var div = d3.select("body").append("div")
@@ -308,14 +342,14 @@
                         {
                             if(d=="<-Prev" || d=="Next->") return("yellow")
                             if(Number(d)===2005) return('blue');
-                            else return ('red');
+                            else return ('brown');
                         })
                         .on('click', function(d,i)
                         {
                             d3.selectAll("rect").attr("fill", function(d)
                             {
                                 if(d=="Next->" || d=="<-Prev") return ("yellow");
-                                else return ("red")
+                                else return ("brown")
                             })
 
                             d3.select(this)
@@ -409,7 +443,7 @@
                         .duration(500)
                         .style("opacity", 0);
                 })
-                .append("circle").attr("r", 2).attr("opacity", 1)
+                .append("circle").attr("r", 4).attr("opacity", 1)
                 .attr("fill", function(d, i){return(cs(d["Region"]))})
 
             //Decide which country codes to show and which to hide to avoid overlapping
@@ -440,8 +474,8 @@
                             }
                             return (country_code)
                         })
-                        .attr("font-size", 8)
-                        .attr("x", 3)
+                        .attr("font-size", 9)
+                        .attr("x", 4)
                         .attr("y", 3)
                 })
 
@@ -458,7 +492,9 @@
                 .attr("text-anchor", "end")
                 .attr("x", 500)
                 .attr("y", 1.75*margin+svg_dim)
-                .text("Life expectancy at birth, total (years)");
+                .style('fill', 'DarkGreen')
+                .style('font-weight', 'bold')
+                .text("Life expectancy at birth, total (years)")
 
             d3.select("svg").append("text")
                 .attr("class", "y label")
@@ -466,6 +502,8 @@
                 .attr("x", -svg_dim/3)
                 .attr("y", 20)
                 .attr("dy", ".25em")
+                .style('fill', 'DarkGreen')
+                .style('font-weight', 'bold')
                 .attr("transform", "rotate(-90)")
                 .text("GDP per capita, PPP (constant 2017 international $)");
 
@@ -473,6 +511,16 @@
                 .append("g")
                 .attr("class", "annotation-group")
                 .call(makeAnnotations)
+
+            d3.select("svg")
+                .append("g")
+                .attr("class", "annotation-group2")
+                .call(makeAnnotations2)
+
+            d3.select("svg")
+                .append("g")
+                .attr("class", "annotation-group3")
+                .call(makeAnnotations3)
 
             show_year_annotation(select_year)
 
@@ -494,12 +542,15 @@
                 d3.select(".Africa").attr("opacity", 0);
                 d3.select(".annotation2008").attr("opacity", 0);
                 d3.select(".annotation2013").attr("opacity", 0);
+                d3.select(".annotation2015_03").attr("opacity", 0);
             }
             if(clicked_region=="Middle East & North Africa"){
                 d3.select(".annotation2007").attr("opacity", 0);
                 d3.select(".annotation2011").attr("opacity", 0);
             }
-            if(clicked_region=="North America") d3.select(".NorthAmerica").attr("opacity", 0);
+            if(clicked_region=="North America") d3.select(".NorthAmerica").attr("opacity", 0)
+            if(clicked_region=="Europe & Central Asia") d3.select(".annotation2015_02").attr("opacity", 0);
+            if(clicked_region=="East Asia & Pacific") d3.select(".annotation2015").attr("opacity", 0);
         }
         else{
             selected_regions.push(clicked_region);
@@ -507,12 +558,19 @@
                 d3.select(".Africa").attr("opacity", 1);
                 if(select_year==2008) d3.select(".annotation2008").attr("opacity", 1);
                 if(select_year==2013) d3.select(".annotation2013").attr("opacity", 1);
+                if(select_year==2015) d3.select(".annotation2015_03").attr("opacity", 1);
             }
             if(clicked_region=="Middle East & North Africa"){
                 if(select_year==2007) d3.select(".annotation2007").attr("opacity", 1);
                 if(select_year==2011) d3.select(".annotation2011").attr("opacity", 1);
             }
             if(clicked_region=="North America") d3.select(".NorthAmerica").attr("opacity", 1);
+            if(clicked_region=="Europe & Central Asia"){
+                if(select_year==2015) d3.select(".annotation2015_02").attr("opacity", 1);
+            }
+            if(clicked_region=="East Asia & Pacific"){
+                if(select_year==2015) d3.select(".annotation2015").attr("opacity", 1);
+            }
         }
 
         plot_points();
@@ -525,7 +583,6 @@
         let cur_y = 0
 
         let select_year_data = csv_data.filter(function(e){return (e.Time==select_year)})
-        //people.filter((person) => id_filter.includes(Number(person.id)) && person.gender === "m")
         let select_year_region_data = csv_data.filter(({ Region, Time }) => selected_regions.includes(Region) && Time==select_year)
 
         for(i=0; i<select_year_data.length; i++){
@@ -557,12 +614,16 @@
         d3.select(".annotation2011").attr("opacity",0)
         d3.select(".annotation2013").attr("opacity",0)
         d3.select(".annotation2015").attr("opacity",0)
-        if(select_year==2007) d3.select(".annotation2007").attr("opacity",1);
-        if(select_year==2008) d3.select(".annotation2008").attr("opacity",1);
+        d3.select(".annotation2015_02").attr("opacity",0)
+        d3.select(".annotation2015_03").attr("opacity",0)
+        if(select_year==2007) if(selected_regions.includes("Middle East & North Africa")) d3.select(".annotation2007").attr("opacity",1);
+        if(select_year==2008) if(selected_regions.includes("Sub-Saharan Africa")) d3.select(".annotation2008").attr("opacity",1);
         if(select_year==2009) d3.select(".annotation2009").attr("opacity",1);
-        if(select_year==2011) d3.select(".annotation2011").attr("opacity",1);
-        if(select_year==2013) d3.select(".annotation2013").attr("opacity",1);
-        if(select_year==2015) d3.select(".annotation2015").attr("opacity",1);
+        if(select_year==2011) if(selected_regions.includes("Middle East & North Africa")) d3.select(".annotation2011").attr("opacity",1);
+        if(select_year==2013) if(selected_regions.includes("Sub-Saharan Africa")) d3.select(".annotation2013").attr("opacity",1);
+        if(select_year==2015) if(selected_regions.includes("East Asia & Pacific")) d3.select(".annotation2015").attr("opacity",1);
+        if(select_year==2015) if(selected_regions.includes("Europe & Central Asia")) d3.select(".annotation2015_02").attr("opacity",1);
+        if(select_year==2015) if(selected_regions.includes("Sub-Saharan Africa")) d3.select(".annotation2015_03").attr("opacity",1);
     }
 
 </script>
