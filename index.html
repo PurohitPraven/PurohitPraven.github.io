@@ -60,7 +60,7 @@
         .then(function(data) {
             let margin = 60
             let svg_dim = 700
-            let svg_dim2 = 1400
+            let svg_dim2 = 1700
             let max_gdp = 0
             let max_lifeexp = 0
 
@@ -70,16 +70,16 @@
                  {
                     type: d3.annotationXYThreshold,
                     note: {
-                        label: "Sub-Saharan African countries have lower life expectancy and lower GDP. Even when GDP is high, life expectancy doesnt show a corresponding increase",
+                        label: "Sub-Saharan African countries have lower life expectancy and lower GDP. Even when GDP is high, life expectancy isnt as high as countries with similar GDP in other regions",
                         title: "Sub-Saharan Africa",
                         wrap: 290
                     },subject: {
-                        x1: 70,
-                        x2: 450
+                        y1: 420,
+                        y2: 750
                     },
-                    x: 190,
-                    y: 170,
-                    dy: -40,
+                    x: 1350,
+                    y: 570,
+                    dy: -10,
                     dx: 20,
                     className : "Africa"
                 },
@@ -88,16 +88,16 @@
                     note: {
                         label: "North American countries are at the top of the spectrum for GDP and Life expectancy",
                         title: "North America",
-                        wrap: 190
+                        wrap: 290
                     },
                     subject: {
-                        y1: 130,
-                        y2: 240
+                        x1: 1330,
+                        x2: 1580
                     },
-                    x: 790,
-                    y: 180,
-                    dy: 30,
-                    dx: 40,
+                    x: 1490,
+                    y: 80,
+                    dy: -20,
+                    dx: -40,
                     className: "NorthAmerica"
                 },
                 {
@@ -107,12 +107,8 @@
                         title: "1st Trend",
                         wrap: 340
                     },
-                    subject: {
-                        y1: 280,
-                        y2: 340
-                    },
-                    x: 790,
-                    y: 300,
+                    x: 1290,
+                    y: 310,
                     dy: 30,
                     dx: 90
                 },
@@ -123,8 +119,8 @@
                         title: "2nd Trend",
                         wrap: 340
                     },
-                    x: 790,
-                    y: 380,
+                    x: 1290,
+                    y: 370,
                     dy: 30,
                     dx: 90
                 }].map(function(d){ d.color = "Blue"; return d})
@@ -140,12 +136,12 @@
                     note: {
                         label: "Click Next or previous to see changes in GDP and Life Expectancy over years, or select an year by clicking on it",
                         title: "Slide Show",
-                        wrap: 340
+                        wrap: 240
                     },
-                    x: 770,
-                    y: 10,
-                    dy: 10,
-                    dx: 40
+                    x: 910,
+                    y: 30,
+                    dy: 5,
+                    dx: 10
                 },
                 {
                     type: d3.annotationCallout,
@@ -155,8 +151,8 @@
                         wrap: 140
                     },
                     x: 1620,
-                    y: 660,
-                    dy: 10,
+                    y: 740,
+                    dy: 60,
                     dx: 10
                 }].map(function(d){ d.color = "gray"; return d})
 
@@ -169,33 +165,33 @@
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "UAE GDP falls, more impacted by the start of the housing bubble burst",
+                        label: "UAE GDP reduces, impacted by the start of the housing bubble burst",
                         title: "2007",
                         wrap: 160
                     },
-                    x: 610,
-                    y: 160,
-                    dy: 180,
-                    dx: -380,
+                    x: 1520,
+                    y: 210,
+                    dy: -40,
+                    dx: -680,
                     className: "annotation2007"
                 },
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "Zimbabwe GDP falls due to political instability and hyperinflation.",
+                        label: "Zimbabwe GDP reduces due to political instability and hyperinflation.",
                         title: "2008",
                         wrap: 160
                     },
-                    x: 160,
-                    y: 630,
+                    x: 345,
+                    y: 650,
                     dy: -290,
-                    dx: 0,
+                    dx: -30,
                     className: "annotation2008"
                 },
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "Many countries see a fall in GDP due to recession, housing market crash and stock market crash",
+                        label: "Many countries see a reduction in GDP due to recession, housing market crash and stock market crash",
                         title: "2009",
                         wrap: 160
                     },
@@ -208,12 +204,12 @@
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "Libya GDP falls significantly due to Libyan war and death of Mohammed Gaddafi",
+                        label: "Libya GDP reduces significantly due to Libyan war and death of Mohammed Gaddafi",
                         title: "2011",
                         wrap: 160
                     },
-                    x: 550,
-                    y: 440,
+                    x: 840,
+                    y: 270,
                     dy: -90,
                     dx: -310,
                     className: "annotation2011"
@@ -221,14 +217,27 @@
                 {
                     type: d3.annotationCallout,
                     note: {
-                        label: "GDP for Central African Republic falls due to civil war",
+                        label: "Libya GDP rises after war over",
+                        title: "2012",
+                        wrap: 160
+                    },
+                    x: 1085,
+                    y: 270,
+                    dy: -90,
+                    dx: -310,
+                    className: "annotation2012"
+                },
+                {
+                    type: d3.annotationCallout,
+                    note: {
+                        label: "GDP for Central African Republic reduces due to civil war",
                         title: "2013",
                         wrap: 160
                     },
-                    x: 200,
-                    y: 730,
+                    x: 110,
+                    y: 610,
                     dy: -350,
-                    dx: 0,
+                    dx: 20,
                     className: "annotation2013"
                 },
                 {
@@ -238,10 +247,10 @@
                         title: "2015",
                         wrap: 160
                     },
-                    x: 720,
-                    y: 100,
-                    dy: 100,
-                    dx: -500,
+                    x: 1665,
+                    y: 95,
+                    dy: 70,
+                    dx: -5,
                     className: "annotation2015"
                 },
                 {
@@ -251,10 +260,10 @@
                         title: "",
                         wrap: 160
                     },
-                    x: 700,
-                    y: 168,
-                    dy: 170,
-                    dx: -400,
+                    x: 1500,
+                    y: 125,
+                    dy: 110,
+                    dx: -10,
                     className: "annotation2015_02"
                 },
                 {
@@ -264,10 +273,10 @@
                         title: "",
                         wrap: 160
                     },
-                    x: 260,
-                    y: 650,
-                    dy: -100,
-                    dx: -40,
+                    x: 310,
+                    y: 560,
+                    dy: 90,
+                    dx: 40,
                     className: "annotation2015_03"
                 }].map(function(d){ d.color = "red"; return d})
 
@@ -316,7 +325,7 @@
                 .data(years)
                 .enter()
                 .append("g")
-                .attr("transform", function(d, i) { return "translate(" + (i*58) + ",20)"; })
+                .attr("transform", function(d, i) { return "translate(" + (80+i*65) + ",30)"; })
                 .append("text")
                 .text(function(d,i){return(years[i])})
                 .style('font-weight', 600)
@@ -465,19 +474,19 @@
                                 if(counter%3 != 0) return ("");
                             }
                             if((life_exp>65 & life_exp<85) & (gdp>30000 & gdp<50000)){
-                                if(counter%4 != 0) return ("");
+                                if(counter%3 != 0) return ("");
                             }
                             if((life_exp>60 & life_exp<65) & (gdp>2000 & gdp<5000)){
                                 if(counter%2 != 0) return ("");
                             }
                             if((life_exp>52 & life_exp<60) & (gdp<2000)){
-                                if(counter%2 != 0) return ("");
+                                if(counter%1 != 0) return ("");
                             }
                             return (country_code)
                         })
-                        .attr("font-size", 9)
-                        .attr("x", 4)
-                        .attr("y", 3)
+                        .attr("font-size", 10)
+                        .attr("x", -9)
+                        .attr("y", 12 + Math.round(Math.random())*-20)
                 })
 
             d3.select("svg").append("g")
@@ -491,7 +500,7 @@
             d3.select("svg").append("text")
                 .attr("class", "x label")
                 .attr("text-anchor", "end")
-                .attr("x", 500)
+                .attr("x", 1000)
                 .attr("y", 1.75*margin+svg_dim)
                 .style('fill', 'DarkGreen')
                 .style('font-weight', 'bold')
@@ -548,6 +557,7 @@
             if(clicked_region=="Middle East & North Africa"){
                 d3.select(".annotation2007").attr("opacity", 0);
                 d3.select(".annotation2011").attr("opacity", 0);
+                d3.select(".annotation2012").attr("opacity", 0);
             }
             if(clicked_region=="North America") d3.select(".NorthAmerica").attr("opacity", 0)
             if(clicked_region=="Europe & Central Asia") d3.select(".annotation2015_02").attr("opacity", 0);
@@ -564,6 +574,7 @@
             if(clicked_region=="Middle East & North Africa"){
                 if(select_year==2007) d3.select(".annotation2007").attr("opacity", 1);
                 if(select_year==2011) d3.select(".annotation2011").attr("opacity", 1);
+                if(select_year==2012) d3.select(".annotation2012").attr("opacity", 1);
             }
             if(clicked_region=="North America") d3.select(".NorthAmerica").attr("opacity", 1);
             if(clicked_region=="Europe & Central Asia"){
@@ -613,6 +624,7 @@
         d3.select(".annotation2008").attr("opacity",0)
         d3.select(".annotation2009").attr("opacity",0)
         d3.select(".annotation2011").attr("opacity",0)
+        d3.select(".annotation2012").attr("opacity",0)
         d3.select(".annotation2013").attr("opacity",0)
         d3.select(".annotation2015").attr("opacity",0)
         d3.select(".annotation2015_02").attr("opacity",0)
@@ -621,6 +633,7 @@
         if(select_year==2008) if(selected_regions.includes("Sub-Saharan Africa")) d3.select(".annotation2008").attr("opacity",1);
         if(select_year==2009) d3.select(".annotation2009").attr("opacity",1);
         if(select_year==2011) if(selected_regions.includes("Middle East & North Africa")) d3.select(".annotation2011").attr("opacity",1);
+        if(select_year==2012) if(selected_regions.includes("Middle East & North Africa")) d3.select(".annotation2012").attr("opacity",1);
         if(select_year==2013) if(selected_regions.includes("Sub-Saharan Africa")) d3.select(".annotation2013").attr("opacity",1);
         if(select_year==2015) if(selected_regions.includes("East Asia & Pacific")) d3.select(".annotation2015").attr("opacity",1);
         if(select_year==2015) if(selected_regions.includes("Europe & Central Asia")) d3.select(".annotation2015_02").attr("opacity",1);
