@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rotating Redirect</title>
+  <title>Rotator</title>
   <meta charset="UTF-8">
 </head>
 <body>
@@ -15,16 +15,26 @@
     "https://trello.com/b/XMMe7dP7/geetanjali-maths/timeline"
   ];
 
-  const delay = 5000; // 5 seconds (adjust if needed)
-
+  const delay = 15000; // 15 seconds on each Trello page
   let index = 0;
 
-  function rotate() {
-    window.location.href = urls[index];
-    index = (index + 1) % urls.length;
+  // Check if Trello bounced us back with a parameter
+  const params = new URLSearchParams(location.search);
+  if (params.has("back")) {
+    index = parseInt(params.get("back"), 10);
   }
 
-  setTimeout(rotate, delay);
+  // Send user to the URL, with a script that returns after 'delay'
+  function go() {
+    const url = urls[index];
+    const nextIndex = (index + 1) % urls.length;
+
+    // Trello will load this page fully
+    window.location.href = 
+      url + `?next=${nextIndex}&delay=${delay}`;
+  }
+
+  go();
 </script>
 </body>
 </html>
