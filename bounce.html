@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  const params = new URLSearchParams(location.search);
+  const next = params.get("next") || 0;
+  const delay = params.get("delay") || 10000;
+
+  setTimeout(() => {
+    window.location.href = `https://purohitpraven.github.io/rotate.html?back=${next}`;
+  }, delay);
+</script>
+</body>
+</html>
