@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rotating Redirect</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<script>
+  const urls = [
+    "https://trello.com/b/1jDsAzAD/geetanjali-physics",
+    "https://trello.com/b/1jDsAzAD/geetanjali-physics/timeline",
+    "https://trello.com/b/pu8BflVW/geetanjali-chemistry",
+    "https://trello.com/b/pu8BflVW/geetanjali-chemistry/timeline",
+    "https://trello.com/b/XMMe7dP7/geetanjali-maths",
+    "https://trello.com/b/XMMe7dP7/geetanjali-maths/timeline"
+  ];
+
+  const delay = 5000; // 5 seconds (adjust if needed)
+
+  let index = 0;
+
+  function rotate() {
+    window.location.href = urls[index];
+    index = (index + 1) % urls.length;
+  }
+
+  setTimeout(rotate, delay);
+</script>
+</body>
+</html>
